@@ -1,45 +1,45 @@
-# Algoritmos Eficientes e Ineficientes: Como a Complexidade Impacta o Desempenho
+# Análise de Complexidade de Algoritmos: Como a Eficiência Impacta o Desempenho
 
-A eficiência de um algoritmo está diretamente ligada à forma como ele utiliza os recursos computacionais, como **tempo de execução** e **memória**. Em ciência da computação, um dos principais critérios para avaliar essa eficiência é a chamada **complexidade de tempo**, expressa por meio da **notação Big-O**.
-
-
----
-
-##  O que é um algoritmo eficiente?
-
-Um algoritmo eficiente é aquele que **resolve o problema corretamente** com o **menor uso possível de recursos**, mesmo quando a entrada de dados cresce significativamente. Em geral, algoritmos com complexidade **O(1), O(log n), O(n)** e **O(n log n)** são considerados eficientes.
+Material didático desenvolvido para o ensino de Análise de Algoritmos e Estrutura de Dados, explorando a relação entre complexidade de tempo, recursos computacionais e escalabilidade por meio da **Notação Big-O** com exemplos práticos em Python.
 
 ---
 
-## É um algoritmo ineficiente?
+## O que determina a eficiência de um algoritmo?
 
-Já os algoritmos ineficientes **consomem muitos recursos** para resolver um problema, principalmente tempo. Eles tendem a se tornar inviáveis para entradas grandes. Exemplos incluem algoritmos com complexidade **O(n²)**, **O(2ⁿ)** ou **O(n!)**.
+A eficiência de um algoritmo está diretamente ligada à forma como ele utiliza recursos computacionais, especialmente **tempo de execução** e **uso de memória (espaço)**, conforme o volume de dados de entrada ($N$) cresce.
 
----
-
-## Entendendo as complexidades com exemplos
-
-A seguir, veja os principais tipos de complexidade de tempo, com exemplos simples de algoritmos implementados em Python:
+* **Algoritmos Eficientes:** Resolvem o problema consumindo a menor quantidade viável de recursos, escalando bem mesmo com entradas massivas. Comumente associados a complexidades $O(1)$, $O(\log n)$, $O(n)$ e $O(n \log n)$.
+* **Algoritmos Ineficientes:** Consomem tempo ou memória de forma desproporcional. Tornam-se inviáveis à medida que a entrada aumenta, como complexidades $O(n^2)$, $O(2^n)$ ou $O(n!)$.
 
 ---
 
-###  O(1) – Complexidade Constante
+## Tabela Comparativa de Complexidade (Big-O)
 
-> O tempo de execução **não depende** do tamanho da entrada.
+| Notação | Classificação | Comportamento com o aumento de $N$ | Exemplo Clássico |
+| :---: | :---: | :--- | :--- |
+| **$O(1)$** | Constante | Execução instantânea; independente de $N$. | Acesso direto por índice em array. |
+| **$O(\log n)$** | Logarítmica | Cresce muito lentamente; divide o problema pela metade. | Busca Binária. |
+| **$O(n)$** | Linear | Cresce proporcionalmente ao tamanho da entrada. | Busca Linear (varredura). |
+| **$O(n \log n)$** | Quase Linear | Padrão ótimo para ordenações por comparação. | Merge Sort, Quick Sort (médio). |
+| **$O(n^2)$** | Quadrática | Tempo cresce rapidamente; inviável para grandes volumes. | Bubble Sort, laços aninhados. |
+| **$O(n!)$** | Fatorial | Crescimento explosivo; inviável computacionalmente. | Caixeiro-viajante por força bruta. |
 
+---
+
+## Exemplos Práticos em Python
+
+### 1. $O(1)$ — Complexidade Constante
+O tempo de execução não depende do tamanho da entrada.
 ```python
 def obter_primeiro_elemento(lista):
     return lista[0]
-
-
 ```
-- Muito eficiente.
+> **Vantagem:** Muito eficiente. Ideal sempre que possível.
 
-- Ideal sempre que possível
+---
 
-##  O(log n) – Complexidade Logarítmica  
-O tempo cresce lentamente conforme a entrada aumenta.
-
+### 2. $O(\log n)$ — Complexidade Logarítmica
+O tempo de execução cresce lentamente conforme a entrada aumenta, pois o espaço de busca é reduzido pela metade a cada passo.
 ```python
 def busca_binaria(lista, alvo):
     inicio, fim = 0, len(lista) - 1
@@ -53,9 +53,12 @@ def busca_binaria(lista, alvo):
             fim = meio - 1
     return False
 ```
-##  O(n) – Complexidade Linear
-O tempo cresce proporcionalmente ao tamanho da entrada.
+> **Aplicação:** Essencial para buscas eficientes em grandes volumes de dados ordenados.
 
+---
+
+### 3. $O(n)$ — Complexidade Linear
+O tempo de execução cresce proporcionalmente ao tamanho da lista.
 ```python
 def encontrar_valor(lista, valor):
     for item in lista:
@@ -63,21 +66,21 @@ def encontrar_valor(lista, valor):
             return True
     return False
 ```
+> **Característica:** Precisa verificar cada elemento pelo menos uma vez no pior caso.
 
-- Precisa verificar cada elemento uma vez.
+---
 
-- Razoavelmente eficiente.
-
-##  O(n log n) – Complexidade Quase Linear
-Tempo um pouco maior que O(n), mas ainda eficiente.
-
+### 4. $O(n \log n)$ — Complexidade Quase Linear
+Tempo ligeiramente superior ao linear, mas amplamente aceito como o limite eficiente para ordenação baseada em comparação.
 ```python
 def merge_sort(lista):
     if len(lista) <= 1:
         return lista
+    
     meio = len(lista) // 2
     esquerda = merge_sort(lista[:meio])
     direita = merge_sort(lista[meio:])
+    
     return merge(esquerda, direita)
 
 def merge(esq, dir):
@@ -94,11 +97,12 @@ def merge(esq, dir):
     resultado.extend(dir[j:])
     return resultado
 ```
-- Algoritmo de ordenação eficiente, mesmo para grandes listas.
+> **Aplicação:** Algoritmos eficientes de ordenação para grandes coleções de dados.
 
-##  O(n²) – Complexidade Quadrática
-O tempo cresce de forma quadrática com o tamanho da entrada.
+---
 
+### 5. $O(n^2)$ — Complexidade Quadrática
+O tempo de execução cresce de forma proporcional ao quadrado da entrada. Torna-se lento rapidamente para entradas a partir de centenas de itens.
 ```python
 def verificar_duplicados(lista):
     for i in range(len(lista)):
@@ -106,39 +110,37 @@ def verificar_duplicados(lista):
             if lista[i] == lista[j]:
                 return True
     return False
-
 ```
-- Muito lento para n > 30.
+> **Alerta:** Comum em algoritmos ingênuos de força bruta com laços de repetição aninhados.
 
-- Comum em algoritmos de força bruta ou recursão sem otimização.
+---
 
-##  O(n!) – Complexidade Fatorial
-O tempo cresce de forma explosiva.
+### 6. $O(n!)$ — Complexidade Fatorial
+Crescimento explosivo. Para $N = 10$, já são necessárias mais de 3,6 milhões de operações.
 ```python
 import itertools
 
 def gerar_permutacoes(lista):
     return list(itertools.permutations(lista))
 ```
+> **Limitação:** Computacionalmente impraticável para valores de $N$ moderados ou grandes.
 
-- Para n = 10, já existem 3.628.800 permutações.
+---
 
-- Impraticável em grande escala.
+## Conclusão
 
-  ---
+Avaliar a complexidade assintótica de um algoritmo permite tomar decisões conscientes de arquitetura de software, prevenindo gargalos de desempenho e consumo desnecessário de infraestrutura antes mesmo de colocar a solução em produção.
 
-Avaliar a complexidade de um algoritmo permite escolher a melhor solução para o seu problema, evitando atrasos, lentidão e consumo excessivo de recursos. Sempre que possível, opte por algoritmos com menor complexidade assintótica.
+---
 
-<img width="860" height="610" alt="image" src="https://github.com/user-attachments/assets/83f42015-b69e-4a38-9b03-1028e0156033" />
+## Autoria
+* **Profª Rebeca** — Professora de Computação
+* Material desenvolvido para suporte às aulas de Algoritmos e Estrutura de Dados.
 
+---
 
+## Gráfico de Complexidade
 
-
-
-
-
-
-
-
-
-
+<p align="center">
+  <img width="860" height="610" alt="image" src="https://github.com/user-attachments/assets/83f42015-b69e-4a38-9b03-1028e0156033" />
+</p>
